@@ -66,6 +66,10 @@
 *.rsa
 *.key.json
 
+## claude code
+.claude
+prompts.txt
+
 ## ssh keys
 *.ssh
 *.ssh-key
