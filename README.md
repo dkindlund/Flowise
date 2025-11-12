@@ -16,7 +16,7 @@ English | [繁體中文](./i18n/README-TW.md) | [简体中文](./i18n/README-ZH.
 
 </div>
 
-<h3>F5 AI Agent Workflow Design Hub</h3>
+<h3>F5 AI Agents Workflow Design Hub by Flowise</h3>
 <h4>Build AI Agents, Visually</h4>
 <a href="https://github.com/FlowiseAI/Flowise">
 <img width="100%" src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise_agentflow.gif?raw=true"></a>
