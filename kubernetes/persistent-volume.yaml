@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flowise-data-pvc
+  namespace: f5-flowise
+  labels:
+    app: f5-ai-agents
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  # Uncomment and specify storageClassName if using specific storage class
+  # storageClassName: standard

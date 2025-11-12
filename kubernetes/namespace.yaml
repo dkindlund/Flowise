@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: f5-flowise
+  labels:
+    app: f5-ai-agents
+    environment: production

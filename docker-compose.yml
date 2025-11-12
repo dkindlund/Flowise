@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  flowise:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: f5-ai-agents-flowise
+    restart: unless-stopped
+    environment:
+      - PORT=3000
+      - DATABASE_PATH=/root/.flowise
+      - APIKEY_PATH=/root/.flowise
+      - SECRETKEY_PATH=/root/.flowise
+      - LOG_PATH=/root/.flowise/logs
+      - NODE_ENV=production
+      # Uncomment below to enable authentication
+      # - FLOWISE_USERNAME=admin
+      # - FLOWISE_PASSWORD=changeme
+      # Uncomment below to enable rate limiting
+      # - RATE_LIMIT_MAX=100
+      # - RATE_LIMIT_DURATION=1
+    ports:
+      - '3000:3000'
+    volumes:
+      # Persistent storage for Flowise data
+      - flowise_data:/root/.flowise
+      # Optional: Mount local directory for logs
+      # - ./logs:/root/.flowise/logs
+    healthcheck:
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:3000/api/v1/ping']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - flowise_network
+
+volumes:
+  flowise_data:
+    driver: local
+    name: f5_flowise_data
+
+networks:
+  flowise_network:
+    driver: bridge
+    name: f5_flowise_network
