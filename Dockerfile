@@ -16,6 +16,10 @@ RUN apk add --no-cache chromium
 # Fixes: https://github.com/FlowiseAI/Flowise/issues/4126
 RUN apk add --no-cache curl wget
 
+# Install git (required for faiss-node to clone dependencies)
+# Also install cmake and additional build tools for native modules on ARM64
+RUN apk add --no-cache git cmake
+
 #install PNPM globaly
 RUN npm install -g pnpm
 

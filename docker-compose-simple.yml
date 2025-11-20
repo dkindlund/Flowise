@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: flowise
       POSTGRES_PASSWORD: flowisepassword
     ports:
-      - '5433:5432'  # Changed to 5433 to avoid conflict with local PostgreSQL
+      - '5433:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -28,18 +28,15 @@ services:
     container_name: f5-flowise-ollama
     restart: unless-stopped
     ports:
-      - '11435:11434'  # Changed to avoid conflict with local Ollama
+      - '11435:11434'  # Changed to 11435 to avoid conflict with local Ollama
     volumes:
       - ollama_data:/root/.ollama
     networks:
       - flowise_network
 
-  # Flowise application (F5-branded)
+  # Flowise application (using official pre-built image)
   flowise:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: f5-flowise:latest
+    image: flowiseai/flowise:latest
     container_name: f5-flowise-app
     restart: unless-stopped
     depends_on:
@@ -74,7 +71,7 @@ services:
       # - CORS_ORIGINS=*
       # - IFRAME_ORIGINS=*
     ports:
-      - '3001:3000'  # Changed to avoid port conflict
+      - '3001:3000'  # Changed to 3001 to avoid conflict
     volumes:
       - flowise_data:/root/.flowise
     healthcheck:
