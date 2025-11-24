@@ -107,6 +107,48 @@ Once inside Flowise:
 - **PostgreSQL**: localhost:5432
 - **Ollama API**: http://localhost:11434
 
+### Network Architecture
+
+All three containers are connected to a shared Docker bridge network:
+
+- **Network Name**: `f5_flowise_network`
+- **Subnet**: `172.28.0.0/16`
+- **Gateway**: `172.28.0.1`
+- **Driver**: bridge
+
+#### How Containers Communicate:
+
+The shared network enables seamless communication between services:
+
+1. **Flowise → PostgreSQL**:
+   - Uses hostname: `postgres:5432`
+   - Connection string: `postgresql://flowise:flowisepassword@postgres:5432/flowise`
+
+2. **Flowise → Ollama**:
+   - Uses hostname: `ollama:11434`
+   - Base URL in Flowise: `http://ollama:11434`
+
+3. **Service Discovery**:
+   - Each container can reach others using their service name (postgres, ollama, flowise)
+   - No need for IP addresses - Docker DNS handles name resolution
+   - All traffic stays within the private Docker network
+
+#### Network Inspection:
+
+```bash
+# View network details
+docker network inspect f5_flowise_network
+
+# List all containers on the network
+docker network inspect f5_flowise_network --format='{{range .Containers}}{{.Name}} {{end}}'
+
+# Test connectivity from Flowise to PostgreSQL
+docker exec -it f5-flowise-app ping postgres
+
+# Test connectivity from Flowise to Ollama
+docker exec -it f5-flowise-app wget -O- http://ollama:11434/api/tags
+```
+
 ### Database Credentials (Default)
 - **Database**: flowise
 - **User**: flowise

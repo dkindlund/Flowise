@@ -89,7 +89,8 @@ Get the F5-branded Flowise running with PostgreSQL (pgvector) and Ollama for loc
 - F5-branded Flowise UI on port `3000`
 - PostgreSQL with pgvector on port `5432`
 - Ollama API on port `11434`
-- All services networked and configured to work together
+- All services connected via shared Docker network (`f5_flowise_network`)
+- Seamless inter-container communication using service names
 - Persistent data storage via Docker volumes
 - Custom F5 branding built from source
 
